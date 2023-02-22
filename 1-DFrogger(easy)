@@ -1,0 +1,23 @@
+line1 = list(map(int, input().split()))
+numsquares = line1[0]
+magicnum = int(line1[2])
+numsteps = 0
+board = list(map(int, input().split()))
+frog = line1[1] - 1
+frogsteps = [frog]
+fate = " "
+while (fate == " "):
+    if frog >= len(board):
+        fate = "right"
+    elif frog < 0:
+        fate = "left"
+    elif board[frog] == magicnum:
+        fate = "magic"
+    elif frogsteps.count(frog) > 1:
+        fate = "cycle"
+    else:
+        numsteps += 1
+        frog += board[frog]
+        frogsteps.append(frog)
+print(fate)
+print(numsteps)

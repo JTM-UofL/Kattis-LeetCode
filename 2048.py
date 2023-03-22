@@ -1,4 +1,3 @@
-
 def printb(A):
     for i in range(4):
         for j in range(4):
@@ -7,15 +6,25 @@ def printb(A):
 
 def transpose(A, b):
     if b == "r" or b == "l":
-        for i in range(4):
-            A[i].reverse()
+        rotated_arr = [[0 for _ in range(4)] for _ in range(4)]
+        rotated_arr = A[::-1]
+        return rotated_arr
     elif b == "u":
-        B = A[:][:]
-        for i in range(4, 0, 1):
-            for j in range(4, 0, 1):
-                u = A[j][i]
-                B[i][j] = u
-        A = B
+        rotated_arr = [[0 for _ in range(4)] for _ in range(4)]
+        for i in range(4):
+            for j in range(4):
+                rotated_arr[3 - j][i] = A[i][j]
+        return rotated_arr
+    elif b == "d":
+        rotated_arr = [[0 for _ in range(4)] for _ in range(4)]
+        for i in range(4):
+            for j in range(4):
+                rotated_arr[i][3 - j] = A[j][i]
+        return rotated_arr
+    else:
+        print("Non acceptable transposition detected\n")
+        exit(1)
+
 
 def shiftl(A, i, j):
     if j <= 0:
@@ -46,24 +55,22 @@ def left(A):
         lefthelper(A, i)
 
 def right(A):
-    transpose(A, "r")
-    for i in range(4):
-        lefthelper(A, i)
-    transpose(A, "l")
+    A = transpose(A, "r")
+    left(A)
+    A = transpose(A, "l")
 
-#def down(A):
-#
-# def down helper(A, i):
-#
+def down(A):
+    A = transpose(A, "d")
+    left(A)
+    A = transpose(A, "u")
+
 def up(A):
-    transpose(A, "u")
-    for i in range(4):
-        lefthelper(A,i)
-    transpose(A, "d")
-# def uphelper(A, i):
+    A = transpose(A, "u")
+    left(A)
+    A = transpose(A, "d")
 
 board = [list(map(int, input().split())) for x in range(4)]
 printb(board)
 print("\n")
-transpose(board, "u")
+board = transpose(board, "r")
 printb(board)
